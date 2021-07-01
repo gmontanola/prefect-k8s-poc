@@ -5,7 +5,7 @@ description = ""
 authors = ["Gabriel Montañola <gabriel@montanola.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "~3.8"
 prefect = "^0.14.22"
 kubernetes = "^17.17.0"
 
@@ -13,6 +13,7 @@ kubernetes = "^17.17.0"
 black = "^21.6b0"
 isort = "^5.9.1"
 flake8 = "^3.9.2"
+pre-commit = "^2.13.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
