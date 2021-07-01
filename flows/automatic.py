@@ -5,7 +5,7 @@ from prefect.storage.github import GitHub
 
 @task(name="Sucesso", log_stdout=True)
 def message() -> None:
-    print("Essa flow foi registrada com GitHub Actions")
+    print("Essa flow foi registrada com GitHub Actions.")
 
 
 with Flow(

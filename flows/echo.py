@@ -5,7 +5,7 @@ from prefect.storage.github import GitHub
 
 @task(name="Hello World", log_stdout=True)
 def hello() -> None:
-    print("Olá mundo! Estou com frio...")
+    print("Olá mundo! Tá frio demais.")
 
 
 with Flow(
