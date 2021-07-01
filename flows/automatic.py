@@ -11,7 +11,6 @@ def message() -> None:
 with Flow(
     "automatic-registering",
     storage=GitHub("gmontanola/prefect-k8s-poc", "/flows/automatic.py"),
-    run_config=KubernetesRun(),
-    labels=["k8s"],
+    run_config=KubernetesRun(labels=["k8s"]),
 ) as flow:
     message()
