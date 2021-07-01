@@ -5,14 +5,26 @@ description = ""
 authors = ["Gabriel Montañola <gabriel@montanola.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "~3.8"
 prefect = "^0.14.22"
 kubernetes = "^17.17.0"
+
+[tool.black]
+line-length = 100
+target-version = ["py38"]
+
+[tool.isort]
+line_length = 100
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
 
 [tool.poetry.dev-dependencies]
 black = "^21.6b0"
 isort = "^5.9.1"
 flake8 = "^3.9.2"
+pre-commit = "^2.13.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
