@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: prefect-agent
+  name: prefect-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prefect-agent
+  template:
+    metadata:
+      labels:
+        app: prefect-agent
+    spec:
+      containers:
+        - args:
+            - prefect agent kubernetes start
+          command:
+            - /bin/bash
+            - '-c'
+          env:
+            - name: PREFECT__CLOUD__AGENT__AUTH_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: prefect-cloud-token
+                  key: value
+            - name: PREFECT__CLOUD__API
+              value: 'https://api.prefect.io'
+            - name: NAMESPACE
+              value: prefect
+            - name: PREFECT__CLOUD__AGENT__LABELS
+              value: '[''k8s'']'
+            - name: PREFECT__BACKEND
+              value: cloud
+            - name: PREFECT__CLOUD__AGENT__AGENT_ADDRESS
+              value: 'http://:8080'
+          image: 'prefecthq/prefect:0.14.22-python3.8'
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 2
+            httpGet:
+              path: /api/health
+              port: 8080
+            initialDelaySeconds: 40
+            periodSeconds: 40
+          name: agent
