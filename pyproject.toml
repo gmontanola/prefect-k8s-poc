@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "prefect-k8s-poc"
+name = "prefect-shared-tasks"
 version = "0.1.0"
 description = ""
 authors = ["Gabriel Montañola <gabriel@montanola.com>"]
