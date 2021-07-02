@@ -7,7 +7,7 @@ from prefect_shared_tasks.voice import scream
 
 @task(name="Hello World", log_stdout=True)
 def hello() -> None:
-    print("Olá mundo! Tá frio demais")
+    print("Olá mundo! Tá frio demais...")
 
 
 with Flow(
