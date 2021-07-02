@@ -3,7 +3,7 @@ from prefect.run_configs.kubernetes import KubernetesRun
 from prefect.storage.github import GitHub
 
 
-@task(name="Sucesso", log_stdout=True)
+@task(name="Calculadora tosca", log_stdout=True)
 def dumb_sumb(x: int, y: int) -> None:
     print(f"{x} + {y} = {x+y}!")
 
