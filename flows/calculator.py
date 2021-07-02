@@ -5,7 +5,7 @@ from prefect.storage.github import GitHub
 
 @task(name="Calculadora tosca", log_stdout=True)
 def dumb_sumb(x: int, y: int) -> None:
-    print(f"{x} + {y} = {x+y}")
+    print(f"{x} + {y} = {x+y}!!")
 
 
 with Flow(
