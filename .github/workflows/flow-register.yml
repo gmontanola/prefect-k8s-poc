@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PREFECT__CLOUD__AUTH_TOKEN: ${{ secrets.PREFECT_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -29,9 +31,6 @@ jobs:
 
       - name: Install Prefect
         run: python -m pip install prefect
-
-      - name: Login to Prefect
-        run: prefect auth login --key ${{secrets.PREFECT_TOKEN}}
 
       - name: Register flow(s)
         run: |
