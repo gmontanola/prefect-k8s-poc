@@ -49,5 +49,5 @@ jobs:
       - name: Register flow(s)
         run: |
           for file in ${{ steps.changed-files.outputs.all_modified_files }}; do
-            prefect register --project prefect-k8s-poc --path "$file"
+            poetry run prefect register --project prefect-k8s-poc --path "$file"
           done
