@@ -6,7 +6,7 @@ authors = ["Gabriel Montañola <gabriel@montanola.com>"]
 
 [tool.poetry.dependencies]
 python = "~3.8"
-prefect = "^0.14.22"
+prefect = {extras = ["github"], version = "^0.15.0"}
 kubernetes = "^17.17.0"
 
 [tool.black]
