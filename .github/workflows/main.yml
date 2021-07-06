@@ -1,5 +1,5 @@
 ---
-name: prefect-register
+name: prefect
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     paths: ['flows/**.py']
 
 jobs:
-  build:
+  flow-register:
     runs-on: ubuntu-latest
     env:
       PREFECT__CLOUD__AUTH_TOKEN: ${{ secrets.PREFECT_TOKEN }}
@@ -17,8 +17,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Get changed files
-        id: changed-files
+      - name: Get changed flows
+        id: changed-flows
         uses: tj-actions/changed-files@v8.4
         with:
           files: |
@@ -48,6 +48,6 @@ jobs:
 
       - name: Register flow(s)
         run: |
-          for file in ${{ steps.changed-files.outputs.all_modified_files }}; do
+          for file in ${{ steps.changed-flows.outputs.all_modified_files }}; do
             poetry run prefect register --project prefect-k8s-poc --path "$file"
           done

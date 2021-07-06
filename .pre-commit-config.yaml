@@ -9,6 +9,7 @@ repos:
     - id: check-yaml
       args: [--allow-multiple-documents]
     - id: no-commit-to-branch
+    - id: end-of-file-fixer
 
 - repo: https://github.com/pycqa/isort
   rev: 5.9.1
