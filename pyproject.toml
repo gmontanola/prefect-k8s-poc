@@ -6,7 +6,7 @@ authors = ["Gabriel Montañola <gabriel@montanola.com>"]
 
 [tool.poetry.dependencies]
 python = "~3.8"
-prefect = {extras = ["github"], version = "^0.15.0"}
+prefect = {extras = ["aws", "github"], version = "^0.15.0"}
 kubernetes = "^17.17.0"
 pandas = "^1.3.0"
 requests = "^2.25.1"
