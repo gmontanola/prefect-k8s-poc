@@ -12,7 +12,7 @@ from prefect.tasks.aws.s3 import S3Upload
 from prefect.tasks.secrets import PrefectSecret
 
 # Data para nome do arquivo
-data = pendulum.now(tz="UTC").strftime("%Y%m%d_%H%M%S")
+date = pendulum.now(tz="UTC").strftime("%Y%m%d_%H%M%S")
 
 
 # Criando tarefas personalizadas
@@ -69,5 +69,5 @@ with Flow(
         data=dados,
         bucket=bucket,
         credentials=credenciais_aws,
-        key=f"rick_and_morty/{data}_characters.csv",
+        key=f"rick_and_morty/{date}_characters.csv",
     )
