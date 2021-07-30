@@ -8,7 +8,7 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get -y upgrade
 apt-get -y install --no-install-recommends curl build-essential
-echo "Can we haz cache naow??/"
+echo "Can we haz cache naow??/ No we can't"
 
 # Cleanup
 apt-get clean

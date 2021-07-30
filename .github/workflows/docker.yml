@@ -27,5 +27,5 @@ jobs:
           push: true
           target: runtime-image
           tags: gmontanola/custom-prefect:latest
-          cache-from: type=gha,scope=${{ github.workflow }}
-          cache-to: type=gha,mode=max,scope=${{ github.workflow }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
