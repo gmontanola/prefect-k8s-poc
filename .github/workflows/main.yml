@@ -19,7 +19,7 @@ jobs:
 
       - name: Get changed flows
         id: changed-flows
-        uses: tj-actions/changed-files@v8.4
+        uses: tj-actions/changed-files@v1.0.0
         with:
           files: |
             flows\/.*\.py
