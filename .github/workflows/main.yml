@@ -49,9 +49,14 @@ jobs:
       - name: Create project(s)
         id: create-projects
         run:  |
+          project_array=()
           for file in ${{ steps.changed-flows.outputs.all_modified_files }}; do
             dir=${file%/*}
             project=${dir##*/}
+            project_array+=($project)
+            deduped_project_array=$(tr ' ' '\n' <<< "${project_array[@]}" | sort -u | tr '\n' ' ')
+          done
+          for project in $deduped_project_array; do
             poetry run prefect create project "$project" --skip-if-exists
           done
 
