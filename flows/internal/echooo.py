@@ -7,12 +7,12 @@ from prefect_shared_tasks.voice import scream
 
 @task(name="Hello World", log_stdout=True)
 def hello() -> None:
-    print("Olá mundo! Tá frio demais...")
+    print("3")
 
 
 with Flow(
-    "hello-world",
-    storage=GitHub("gmontanola/prefect-k8s-poc", "/flows/echo.py"),
+    "hello-world-3",
+    storage=GitHub("gmontanola/prefect-k8s-poc", "/flows/echooo.py"),
     run_config=KubernetesRun(labels=["k8s"]),
 ) as flow:
     hello()
