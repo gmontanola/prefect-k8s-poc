@@ -4,13 +4,13 @@ name: prefect
 on:
   push:
     branches: [main]
-    paths: ['flows/**.py']
+    paths: ['flows/**/**.py']
 
 jobs:
   flow-register:
     runs-on: ubuntu-latest
     env:
-      PREFECT__CLOUD__AUTH_TOKEN: ${{ secrets.PREFECT_TOKEN }}
+      PREFECT__CLOUD__API_KEY: ${{ secrets.PREFECT_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -19,10 +19,10 @@ jobs:
 
       - name: Get changed flows
         id: changed-flows
-        uses: tj-actions/changed-files@v8.4
+        uses: tj-actions/changed-files@v1.0.0
         with:
           files: |
-            flows\/.*\.py
+            ^flows/\w+/\w+\.py
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -30,9 +30,9 @@ jobs:
           python-version: 3.8
 
       - name: Install Poetry
-        uses: snok/install-poetry@v1.1.6
+        uses: snok/install-poetry@v1
         with:
-          version: 1.1.7
+          version: 1.1.8
           virtualenvs-in-project: true
 
       - name: Load cached venv
@@ -46,8 +46,20 @@ jobs:
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction
 
+      - name: Create project(s)
+        id: create-projects
+        run:  |
+          for file in ${{ steps.changed-flows.outputs.all_modified_files }}; do
+            dir=${file%/*}
+            project=${dir##*/}
+            poetry run prefect create project "$project" --skip-if-exists
+          done
+
       - name: Register flow(s)
+        if: steps.create-projects.outcome == 'success'
         run: |
           for file in ${{ steps.changed-flows.outputs.all_modified_files }}; do
-            poetry run prefect register --project prefect-k8s-poc --path "$file"
+            dir=${file%/*}
+            project=${dir##*/}
+            poetry run prefect register --project "$project" --path "$file"
           done
