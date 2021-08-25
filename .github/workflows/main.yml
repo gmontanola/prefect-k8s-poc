@@ -22,7 +22,7 @@ jobs:
         uses: tj-actions/changed-files@v1.0.0
         with:
           files: |
-            flows\/.*\.py
+            ^flows/\w+/\w+\.py
 
       - name: Set up Python
         uses: actions/setup-python@v2
