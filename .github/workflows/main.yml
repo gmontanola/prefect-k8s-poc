@@ -10,7 +10,7 @@ jobs:
   flow-register:
     runs-on: ubuntu-latest
     env:
-      PREFECT__CLOUD__AUTH_TOKEN: ${{ secrets.PREFECT_TOKEN }}
+      PREFECT__CLOUD__API_KEY: ${{ secrets.PREFECT_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -46,8 +46,20 @@ jobs:
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction
 
+      - name: Create project(s)
+        id: create-projects
+        run:  |
+          for file in ${{ steps.changed-flows.outputs.all_modified_files }}; do
+            dir=${file%/*}
+            project=${dir##*/}
+            poetry run prefect create project "$project" --skip-if-exists
+          done
+
       - name: Register flow(s)
+        if: steps.create-projects.outcome == 'success'
         run: |
           for file in ${{ steps.changed-flows.outputs.all_modified_files }}; do
-            poetry run prefect register --project prefect-k8s-poc --path "$file"
+            dir=${file%/*}
+            project=${dir##*/}
+            poetry run prefect register --project "$project" --path "$file"
           done
