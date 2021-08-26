@@ -9,7 +9,7 @@ def hello() -> None:
 
 
 with Flow(
-    "hello-world",
+    "dummy",
     storage=GitHub("gmontanola/prefect-k8s-poc", "/flows/dummy/dummy.py"),
     run_config=KubernetesRun(labels=["k8s"]),
 ) as flow:
