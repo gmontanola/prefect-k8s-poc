@@ -16,15 +16,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         with:
           fetch-depth: 2
-
-      - name: Checkout PR
-        uses: actions/checkout@v2
-        if: github.event_name == 'pull_request'
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Dump GitHub context
         env:
@@ -33,11 +26,8 @@ jobs:
 
       - name: Get changed flows
         id: changed-flows
-        if: github.event_name == 'pull_request'
         uses: tj-actions/changed-files@v1.0.0
         with:
-          base_sha: ${{ github.sha }}
-          sha: ${{ github.event.pull_request.head.sha }}
           files: |
             '^flows/\w+/\w+\.py'
 
