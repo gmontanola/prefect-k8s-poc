@@ -50,7 +50,7 @@ jobs:
 
       - name: Create project(s)
         id: create-projects
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         run:  |
           project_array=()
           for file in ${{ steps.changed-flows.outputs.all_modified_files }}; do
