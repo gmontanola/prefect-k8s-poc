@@ -5,6 +5,8 @@ on:
   push:
     branches: [main]
     paths: ['Dockerfile', 'src/prefect_shared_tasks/**.py', 'scripts/**', 'poetry.lock', 'pyproject.toml']
+  pull_request:
+    paths: ['Dockerfile', 'src/prefect_shared_tasks/**.py', 'scripts/**', 'poetry.lock', 'pyproject.toml']
 
 jobs:
   push-image:

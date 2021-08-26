@@ -5,6 +5,8 @@ on:
   push:
     branches: [main]
     paths: ['flows/**/**.py']
+  pull_request:
+    paths: ['flows/**/**.py']
 
 jobs:
   flow-register:
@@ -48,6 +50,7 @@ jobs:
 
       - name: Create project(s)
         id: create-projects
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         run:  |
           project_array=()
           for file in ${{ steps.changed-flows.outputs.all_modified_files }}; do
@@ -60,7 +63,15 @@ jobs:
             poetry run prefect create project "$project" --skip-if-exists
           done
 
-      - name: Register flow(s)
+
+      - name: Register development flow(s)
+        if: github.event_name == 'pull_request'
+        run: |
+          for file in ${{ steps.changed-flows.outputs.all_modified_files }}; do
+            poetry run prefect register --project development --path "$file" --no-schedule
+          done
+
+      - name: Register production flow(s)
         if: steps.create-projects.outcome == 'success'
         run: |
           for file in ${{ steps.changed-flows.outputs.all_modified_files }}; do
