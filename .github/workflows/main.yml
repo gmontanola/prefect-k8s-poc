@@ -50,7 +50,7 @@ jobs:
 
       - name: Create project(s)
         id: create-projects
-        if: github.event_name == 'push' &&  ${{ success() }}
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
         run:  |
           project_array=()
           for file in ${{ steps.changed-flows.outputs.all_modified_files }}; do
@@ -65,7 +65,7 @@ jobs:
 
 
       - name: Register development flow(s)
-        if: github.event_name == 'pull_request' &&  ${{ success() }}
+        if: github.event_name == 'pull_request'
         run: |
           for file in ${{ steps.changed-flows.outputs.all_modified_files }}; do
             poetry run prefect register --project development --path "$file" --no-schedule
