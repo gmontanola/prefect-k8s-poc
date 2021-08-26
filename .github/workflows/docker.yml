@@ -29,5 +29,5 @@ jobs:
         with:
           push: true
           tags: gmontanola/custom-prefect:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=gha,scope=build
+          cache-to: type=gha,mode=max,scope=build
