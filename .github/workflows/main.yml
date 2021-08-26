@@ -17,7 +17,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          fetch-depth: 0
+          fetch-depth: 2
+
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
 
       - name: Get changed flows
         id: changed-flows
@@ -50,7 +55,7 @@ jobs:
 
       - name: Create project(s)
         id: create-projects
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         run:  |
           project_array=()
           for file in ${{ steps.changed-flows.outputs.all_modified_files }}; do

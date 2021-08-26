@@ -1,6 +1,6 @@
 # prefect-k8s-poc
 
-Can we make all Prefect components run on a Kubernetes cluster? Let's try :)
+Can we make Prefect Agent run on a Kubernetes with custom tasks? Let's try :)
 
 ## Authors
 
