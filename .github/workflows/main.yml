@@ -23,11 +23,21 @@ jobs:
       - name: Checkout PR
         uses: actions/checkout@v2
         if: github.event_name == 'pull_request'
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
 
       - name: Get changed flows
         id: changed-flows
+        if: github.event_name == 'pull_request'
         uses: tj-actions/changed-files@v1.0.0
         with:
+          base_sha: ${{ github.sha }}
+          sha: ${{ github.event.pull_request.head.sha }}
           files: |
             '^flows/\w+/\w+\.py'
 
