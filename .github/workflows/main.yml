@@ -16,8 +16,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         with:
-          fetch-depth: 0
+          fetch-depth: 2
+
+      - name: Checkout PR
+        uses: actions/checkout@v2
+        if: github.event_name == 'pull_request'
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Get changed flows
         id: changed-flows
